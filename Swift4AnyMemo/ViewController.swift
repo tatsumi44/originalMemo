@@ -14,13 +14,13 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     let saveData:UserDefaults = UserDefaults.standard
     var mainArray:[[String]]!
     var cellOfNum: Int!
-    var cellOfCount:Int!
+    
     
     
     //セルの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellOfCount = mainArray.count
-        if cellOfCount != 0{
+        
+        if mainArray != nil{
              return mainArray.count
         }else{
            return 10

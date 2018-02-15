@@ -15,15 +15,27 @@ class RegisterViewController: UIViewController {
     var mainArray:[[String]] = []
     var contentsArray:[String] = []
     let saveData:UserDefaults = UserDefaults.standard
+    var cellOfNum: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if saveData.object(forKey: "contents") != nil{
+            mainArray = saveData.object(forKey: "contents") as! [[String]]
+        }
+        if cellOfNum != nil{
+            titleTextField.text = mainArray[cellOfNum][0]
+            contentsTextField.text = mainArray[cellOfNum][1]
+            mainArray.remove(at: cellOfNum)
+        }else{
+            titleTextField.text = ""
+            contentsTextField.text = ""
+        }
         contentsTextField.layer.borderColor = UIColor.black.cgColor
         contentsTextField.layer.borderWidth = 1.0
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -35,9 +47,20 @@ class RegisterViewController: UIViewController {
     
     @IBAction func saveButton(_ sender: Any) {
         contentsArray = [titleTextField.text!,contentsTextField.text!]
-        mainArray.append(contentsArray)
+        if cellOfNum != nil{
+            mainArray.insert(contentsArray, at: cellOfNum)
+            cellOfNum = nil
+            print("A")
+        }else{
+            mainArray.append(contentsArray)
+            print("B")
+        }
         saveData.set(mainArray, forKey: "contents")
+        //        print(saveData.object(forKey: "contents") as! [[String]]!)
+        
+        
     }
     
-
+    
+    
 }
